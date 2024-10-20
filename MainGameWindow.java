@@ -109,10 +109,10 @@ public class MainGameWindow extends JFrame {
             setOpaque(false);
 
             maps = new Image[]{
-                    bgImage1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor1.png"))).getImage(),
-                    bgImage2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor2.png"))).getImage(),
-                    bgImage3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor3.png"))).getImage(),
-                    bgImage4 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor4.png"))).getImage(),
+                bgImage1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor1.png"))).getImage(),
+                bgImage2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor2.png"))).getImage(),
+                bgImage3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor3.png"))).getImage(),
+                bgImage4 = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/maps/playerFloor4.png"))).getImage(),
             };
             iconImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/icon.png"))).getImage();
             background = new ImageIcon(Objects.requireNonNull(getClass().getResource("Resources/BackgroundGame.png"))).getImage();
