@@ -19,7 +19,7 @@ public class GameLauncher {
 
     public static Font loadCustomFont() {
         try {
-            Font loadedFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(GameLauncher.class.getResourceAsStream("Resources/Dungeon.TTF"))).deriveFont(40.0f);
+            Font loadedFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(GameLauncher.class.getResourceAsStream("/Resources/Dungeon.TTF"))).deriveFont(40.0f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(loadedFont);
             return loadedFont;
