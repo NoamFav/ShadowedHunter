@@ -1,4 +1,4 @@
-package src.main;
+package com.ShadowedHunter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class Player {
     }
 
     public void removeItem(String item) {
-        inventory.put(item, inventory.getOrDefault(item,0) - 1);
+        inventory.put(item, inventory.getOrDefault(item, 0) - 1);
     }
 
     public int getItemCount(String item) {
@@ -49,6 +49,6 @@ public class Player {
     }
 
     public void setItemCount(String item, int num) {
-        this.inventory.put(item,num);
+        this.inventory.put(item, num);
     }
 }
