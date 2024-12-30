@@ -1,4 +1,4 @@
-package src.main;
+package com.ShadowedHunter;
 
 class Position {
     int x;

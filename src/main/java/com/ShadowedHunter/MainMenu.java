@@ -1,9 +1,10 @@
-package src.main;
+package com.ShadowedHunter;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
+
+import javax.swing.*;
 
 public class MainMenu extends JFrame {
 
@@ -17,9 +18,8 @@ public class MainMenu extends JFrame {
     Font customFont = GameLauncher.loadCustomFont();
 
     public MainMenu() {
-        backgroundImage = loadImage("/src/main/resources/ground.jpg");
-        titleImage = loadImage("/src/main/resources/Title.png");
-
+        backgroundImage = loadImage("/ground.jpg");
+        titleImage = loadImage("/Title.png");
 
         setTitle("Shadowed Hunter");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +42,7 @@ public class MainMenu extends JFrame {
         add(imagePanel, BorderLayout.CENTER);
 
         bgMusic = new GameLauncher();
-        bgMusic.play("src/main/resources/VoidBgMusic.mp3",20f);
+        bgMusic.play("VoidBgMusic.mp3", 20f);
 
         setVisible(true);
     }
@@ -56,38 +56,44 @@ public class MainMenu extends JFrame {
     }
 
     private JButton createColoredButton(String text, boolean isFixedSize) {
-        JButton button = new JButton(text) {
-            @Override
-            public Dimension getPreferredSize() {
-                if (!isFixedSize) {
-                    int width = (int) (MainMenu.this.getWidth() * 0.5 * 0.7);
-                    int height = (int) (MainMenu.this.getHeight() / 6 * 0.7);
-                    return new Dimension(width, height);
-                } else return super.getPreferredSize();
-            }
+        JButton button =
+                new JButton(text) {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        if (!isFixedSize) {
+                            int width = (int) (MainMenu.this.getWidth() * 0.5 * 0.7);
+                            int height = (int) (MainMenu.this.getHeight() / 6 * 0.7);
+                            return new Dimension(width, height);
+                        } else return super.getPreferredSize();
+                    }
 
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setColor(getBackground());
-                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), ROUNDNESS, ROUNDNESS);
-                super.paintComponent(g);
-            }
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.setRenderingHint(
+                                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2d.setColor(getBackground());
+                        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), ROUNDNESS, ROUNDNESS);
+                        super.paintComponent(g);
+                    }
 
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setColor(Color.WHITE);
-                g2d.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, ROUNDNESS, ROUNDNESS);
-            }
+                    @Override
+                    protected void paintBorder(Graphics g) {
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.setRenderingHint(
+                                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2d.setColor(Color.WHITE);
+                        g2d.drawRoundRect(
+                                0, 0, getWidth() - 1, getHeight() - 1, ROUNDNESS, ROUNDNESS);
+                    }
 
-            @Override
-            public boolean contains(int x, int y) {
-                return new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), ROUNDNESS, ROUNDNESS).contains(x, y);
-            }
-        };
+                    @Override
+                    public boolean contains(int x, int y) {
+                        return new RoundRectangle2D.Float(
+                                        0, 0, getWidth(), getHeight(), ROUNDNESS, ROUNDNESS)
+                                .contains(x, y);
+                    }
+                };
 
         button.setBackground(BUTTON_COLOR);
         button.setForeground(Color.WHITE);
@@ -107,18 +113,19 @@ public class MainMenu extends JFrame {
 
             leftButton = createColoredButton("NEW GAME", false);
             rightButton = createColoredButton("LOAD GAME", false);
-            leftButton.addActionListener(e -> {
-                bgMusic.stopMusic();
-                MainGameWindow.getInstance();
-                MainMenu.this.dispose();
-            });
-            rightButton.addActionListener(e -> {
-                bgMusic.stopMusic();
-                MainGameWindow.getInstance();
-                SaveLoadSystem.loadGame("/src/main/resources/Save/Save.txt");
-                MainMenu.this.dispose();
-            });
-
+            leftButton.addActionListener(
+                    e -> {
+                        bgMusic.stopMusic();
+                        MainGameWindow.getInstance();
+                        MainMenu.this.dispose();
+                    });
+            rightButton.addActionListener(
+                    e -> {
+                        bgMusic.stopMusic();
+                        MainGameWindow.getInstance();
+                        SaveLoadSystem.loadGame("Save.txt");
+                        MainMenu.this.dispose();
+                    });
 
             Font currentFont = leftButton.getFont();
             leftButton.setFont(new Font(currentFont.getFontName(), currentFont.getStyle(), 80));
@@ -156,15 +163,26 @@ public class MainMenu extends JFrame {
             int rightButtonX = (3 * getWidth() / 4) - (rightButton.getPreferredSize().width / 2);
             int buttonY = (5 * getHeight() / 6) - (leftButton.getPreferredSize().height / 2);
 
-            leftButton.setBounds(leftButtonX, buttonY, leftButton.getPreferredSize().width, leftButton.getPreferredSize().height);
-            rightButton.setBounds(rightButtonX, buttonY, rightButton.getPreferredSize().width, rightButton.getPreferredSize().height);
+            leftButton.setBounds(
+                    leftButtonX,
+                    buttonY,
+                    leftButton.getPreferredSize().width,
+                    leftButton.getPreferredSize().height);
+            rightButton.setBounds(
+                    rightButtonX,
+                    buttonY,
+                    rightButton.getPreferredSize().width,
+                    rightButton.getPreferredSize().height);
 
             int closeButtonX = getWidth() - closeButton.getPreferredSize().width - 10;
             int closeButtonY = 10;
-            closeButton.setBounds(closeButtonX, closeButtonY, closeButton.getPreferredSize().width, closeButton.getPreferredSize().height);
+            closeButton.setBounds(
+                    closeButtonX,
+                    closeButtonY,
+                    closeButton.getPreferredSize().width,
+                    closeButton.getPreferredSize().height);
         }
     }
-    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);

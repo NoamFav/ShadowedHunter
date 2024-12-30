@@ -1,8 +1,9 @@
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/GameMap.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/SaveLoadSystem.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/MainMenu.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/Player.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/GameLauncher.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/MainGameWindow.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/Script.java
-/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/Position.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/MainMenu.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/MainGameWindow.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/Position.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/module-info.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/GameLauncher.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/GameMap.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/SaveLoadSystem.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/Player.java
+/Users/noamfavier/Git_projects/ShadowedHunter/src/main/java/com/ShadowedHunter/Script.java

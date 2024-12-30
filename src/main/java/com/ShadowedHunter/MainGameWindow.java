@@ -1,7 +1,7 @@
-package src.main;
+package com.ShadowedHunter;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,20 +9,17 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.awt.Toolkit;
 
-
+import javax.swing.*;
 
 public class MainGameWindow extends JFrame {
 
     private static MainGameWindow instance;
     public static GamePanel panel = new GamePanel();
 
-
     public static AtomicInteger counterValue = new AtomicInteger();
 
     GameLauncher BackgroundMusic;
-
 
     private MainGameWindow() {
         setTitle("Main Game Window");
@@ -44,16 +41,16 @@ public class MainGameWindow extends JFrame {
         setVisible(true);
 
         BackgroundMusic = new GameLauncher();
-        BackgroundMusic.play("src/main/resources/ThemMusic.mp3",20);
+        BackgroundMusic.play("ThemeMusic.mp3", 20);
 
         int delay = 1000;
-        ActionListener taskPerformer = evt -> {
-            counterValue.getAndIncrement();
-            panel.repaint();
-        };
+        ActionListener taskPerformer =
+                evt -> {
+                    counterValue.getAndIncrement();
+                    panel.repaint();
+                };
         new Timer(delay, taskPerformer).start();
     }
-
 
     public void setOutputText(String text) {
         panel.setTextFieldText(text);
@@ -89,7 +86,6 @@ public class MainGameWindow extends JFrame {
         private boolean showCheatSheet = false;
         Font customFont = GameLauncher.loadCustomFont();
 
-
         public void incrementLifeNumber() {
             lifeNumber++;
             this.repaint();
@@ -98,6 +94,7 @@ public class MainGameWindow extends JFrame {
         public int getIconX() {
             return iconX;
         }
+
         public int getIconY() {
             return iconY;
         }
@@ -106,20 +103,52 @@ public class MainGameWindow extends JFrame {
             textArea1.setText(text);
         }
 
-
         public GamePanel() {
             setLayout(null);
             setOpaque(false);
 
-            maps = new Image[]{
-                bgImage1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/maps/playerFloor1.png"))).getImage(),
-                bgImage2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/maps/playerFloor2.png"))).getImage(),
-                bgImage3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/maps/playerFloor3.png"))).getImage(),
-                bgImage4 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/maps/playerFloor4.png"))).getImage(),
-            };
-            iconImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/icon.png"))).getImage();
-            background = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/BackgroundGame.png"))).getImage();
-            cheatSheet = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/main/resources/CheatSheet.png"))).getImage();
+            maps =
+                    new Image[] {
+                        bgImage1 =
+                                new ImageIcon(
+                                                Objects.requireNonNull(
+                                                        getClass()
+                                                                .getResource(
+                                                                        "/maps/playerFloor1.png")))
+                                        .getImage(),
+                        bgImage2 =
+                                new ImageIcon(
+                                                Objects.requireNonNull(
+                                                        getClass()
+                                                                .getResource(
+                                                                        "/maps/playerFloor2.png")))
+                                        .getImage(),
+                        bgImage3 =
+                                new ImageIcon(
+                                                Objects.requireNonNull(
+                                                        getClass()
+                                                                .getResource(
+                                                                        "/maps/playerFloor3.png")))
+                                        .getImage(),
+                        bgImage4 =
+                                new ImageIcon(
+                                                Objects.requireNonNull(
+                                                        getClass()
+                                                                .getResource(
+                                                                        "/maps/playerFloor4.png")))
+                                        .getImage(),
+                    };
+            iconImage =
+                    new ImageIcon(Objects.requireNonNull(getClass().getResource("/icon.png")))
+                            .getImage();
+            background =
+                    new ImageIcon(
+                                    Objects.requireNonNull(
+                                            getClass().getResource("/BackgroundGame.png")))
+                            .getImage();
+            cheatSheet =
+                    new ImageIcon(Objects.requireNonNull(getClass().getResource("/CheatSheet.png")))
+                            .getImage();
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             double screenWidth = screenSize.getWidth();
@@ -132,38 +161,42 @@ public class MainGameWindow extends JFrame {
 
             textArea1 = createRoundedTextArea(false);
             textArea1.setText("Type 'intro' to start");
-            textArea1.setFont(new Font(customFont.getFontName(), customFont.getStyle(), fontSizeForTextArea1));
+            textArea1.setFont(
+                    new Font(
+                            customFont.getFontName(), customFont.getStyle(), fontSizeForTextArea1));
             add(textArea1);
-
 
             textArea2 = createRoundedTextArea(true);
             textArea2.setFont(new Font(customFont.getFontName(), customFont.getStyle(), 50));
             add(textArea2);
 
+            textArea2.addKeyListener(
+                    new KeyAdapter() {
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                                String text = textArea2.getText();
+                                textArea2.setText("");
+                                e.consume();
+                                String action = text.trim();
+                                if (action.equalsIgnoreCase("help")) {
+                                    showCheatSheet = true;
+                                    repaint();
 
-            textArea2.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        String text = textArea2.getText();
-                        textArea2.setText("");
-                        e.consume();
-                        String action = text.trim();
-                        if (action.equalsIgnoreCase("help")) {
-                            showCheatSheet = true;
-                            repaint();
-
-                            Timer timer = new Timer(10000, e1 -> {
-                                showCheatSheet = false;
-                                repaint();
-                            });
-                            timer.setRepeats(false);
-                            timer.start();
+                                    Timer timer =
+                                            new Timer(
+                                                    10000,
+                                                    e1 -> {
+                                                        showCheatSheet = false;
+                                                        repaint();
+                                                    });
+                                    timer.setRepeats(false);
+                                    timer.start();
+                                }
+                                Script.action(action);
+                            }
                         }
-                        Script.action(action);
-                    }
-                }
-            });
+                    });
 
             if (screenWidth == 1440 && screenHeight == 900) {
                 // Adjustments for 1280x720 resolution
@@ -174,14 +207,14 @@ public class MainGameWindow extends JFrame {
                 iconX = 429;
                 iconY = 301;
             } /*else if (screenWidth <= 2560 && screenHeight <= 1440) {
-                // Adjustments for 2560x1440 resolution (Quad HD)
-                iconX = (int) (429 * 1.25); // Example scale factor
-                iconY = (int) (301 * 1.25);
-            } else {
-                // Adjustments for other resolutions
-                iconX = (int) (429 * 1.5); // Example scale factor
-                iconY = (int) (301 * 1.5);
-            }*/
+                  // Adjustments for 2560x1440 resolution (Quad HD)
+                  iconX = (int) (429 * 1.25); // Example scale factor
+                  iconY = (int) (301 * 1.25);
+              } else {
+                  // Adjustments for other resolutions
+                  iconX = (int) (429 * 1.5); // Example scale factor
+                  iconY = (int) (301 * 1.5);
+              }*/
         }
 
         public void setIconPosition(int newX, int newY) {
@@ -199,17 +232,16 @@ public class MainGameWindow extends JFrame {
                 iconX = newX;
                 iconY = newY;
             } /* else if (screenWidth <= 2560 && screenHeight <= 1440) {
-                iconX = (int) (newX * 1.25); // Example scale factor
-                iconY = (int) (newY * 1.25);
-            } else {
-                // Adjustments for other resolutions
-                iconX = (int) (newX * 1.5); // Example scale factor
-                iconY = (int) (newY * 1.5);
-            }*/
+                  iconX = (int) (newX * 1.25); // Example scale factor
+                  iconY = (int) (newY * 1.25);
+              } else {
+                  // Adjustments for other resolutions
+                  iconX = (int) (newX * 1.5); // Example scale factor
+                  iconY = (int) (newY * 1.5);
+              }*/
 
             repaint();
         }
-
 
         public void moveIcon(int deltaX, int deltaY) {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -225,35 +257,38 @@ public class MainGameWindow extends JFrame {
                 iconX += deltaX;
                 iconY += deltaY;
             } /*else if (screenWidth <= 2560 && screenHeight <= 1440) {
-                // Adjustments for 2560x1440 resolution (Quad HD)
-                iconX += (int) (deltaX * 1.25); // Example scale factor
-                iconY += (int) (deltaY * 1.25);
-            } else {
-                // Adjustments for other resolutions
-                iconX += (int) (deltaX * 1.5); // Example scale factor
-                iconY += (int) (deltaY * 1.5);
-            }*/
+                  // Adjustments for 2560x1440 resolution (Quad HD)
+                  iconX += (int) (deltaX * 1.25); // Example scale factor
+                  iconY += (int) (deltaY * 1.25);
+              } else {
+                  // Adjustments for other resolutions
+                  iconX += (int) (deltaX * 1.5); // Example scale factor
+                  iconY += (int) (deltaY * 1.5);
+              }*/
 
             repaint();
         }
 
         private JTextArea createRoundedTextArea(boolean editable) {
-            JTextArea textArea = new JTextArea() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setColor(Color.GRAY);
-                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                    super.paintComponent(g2);
-                    g2.dispose();
-                }
-            };
+            JTextArea textArea =
+                    new JTextArea() {
+                        @Override
+                        protected void paintComponent(Graphics g) {
+                            Graphics2D g2 = (Graphics2D) g.create();
+                            g2.setRenderingHint(
+                                    RenderingHints.KEY_ANTIALIASING,
+                                    RenderingHints.VALUE_ANTIALIAS_ON);
+                            g2.setColor(Color.GRAY);
+                            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                            super.paintComponent(g2);
+                            g2.dispose();
+                        }
+                    };
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);
             textArea.setOpaque(false);
             textArea.setEditable(editable);
-            textArea.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
+            textArea.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
             return textArea;
         }
 
@@ -264,7 +299,6 @@ public class MainGameWindow extends JFrame {
 
             // Load and draw background image
             g2d.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
-
 
             int fullRectWidth = getWidth() - 20;
             int topRectHeight = (int) (getHeight() * 0.80);
@@ -283,7 +317,6 @@ public class MainGameWindow extends JFrame {
             int y = (topRectHeight - scaledHeight) / 2 + 10;
 
             g2d.setClip(new RoundRectangle2D.Float(x, y, scaledWidth, scaledHeight, 20, 20));
-
 
             g2d.drawImage(maps[GameMap.currentMapIndex], x, y, scaledWidth, scaledHeight, this);
             g2d.setClip(null);
@@ -310,7 +343,8 @@ public class MainGameWindow extends JFrame {
             textArea1.setBounds(textArea1X, textArea1StartY, textArea1Width, textArea1Height);
             textArea2.setBounds(startXHalf, textArea2StartY, halfWidth, textArea2Height);
 
-            BufferedImage fogImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+            BufferedImage fogImage =
+                    new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D fogGraphics = fogImage.createGraphics();
 
             applyFogEffect(fogGraphics, getWidth(), getHeight(), iconX + 4, iconY + 4);
@@ -330,21 +364,29 @@ public class MainGameWindow extends JFrame {
             }
         }
 
-        private void applyFogEffect(Graphics2D fogGraphics, int width, int height, int playerX, int playerY) {
+        private void applyFogEffect(
+                Graphics2D fogGraphics, int width, int height, int playerX, int playerY) {
 
             fogGraphics.setComposite(AlphaComposite.SrcOver.derive(1f));
             fogGraphics.setColor(new Color(0, 0, 0, 255));
             fogGraphics.fillRect(0, 0, width, height);
 
             fogGraphics.setComposite(AlphaComposite.DstOut);
-            RadialGradientPaint p = new RadialGradientPaint(
-                    playerX, playerY, (float)getWidth()/30,
-                    new float[]{0.0f, 1.0f},
-                    new Color[]{new Color(0, 0, 0, 255), new Color(0, 0, 0, 0)}
-            );
+            RadialGradientPaint p =
+                    new RadialGradientPaint(
+                            playerX,
+                            playerY,
+                            (float) getWidth() / 30,
+                            new float[] {0.0f, 1.0f},
+                            new Color[] {new Color(0, 0, 0, 255), new Color(0, 0, 0, 0)});
             fogGraphics.setPaint(p);
-            fogGraphics.fillOval((int) (playerX - (float)getWidth()/30), (int) (playerY - ((float)getWidth()/30)), (int) ((float)getWidth()/30 * 2), (int) ((float)getWidth()/30 * 2));
+            fogGraphics.fillOval(
+                    (int) (playerX - (float) getWidth() / 30),
+                    (int) (playerY - ((float) getWidth() / 30)),
+                    (int) ((float) getWidth() / 30 * 2),
+                    (int) ((float) getWidth() / 30 * 2));
         }
+
         private void drawInventory(Graphics2D g2d) {
 
             Font customFont = GameLauncher.loadCustomFont();
@@ -354,21 +396,38 @@ public class MainGameWindow extends JFrame {
             int interPadding = getWidth() / 50;
             int titleHeight = getHeight() / 20;
             int barX = (int) (getWidth() * 0.0104);
-            int barY = titleHeight + padding + getHeight()/15;
+            int barY = titleHeight + padding + getHeight() / 15;
 
-            key = new ImageIcon(Objects.requireNonNull(getClass().getResource("inventoryItems/key.png"))).getImage();
-            health = new ImageIcon(Objects.requireNonNull(getClass().getResource("inventoryItems/healthPotion.png"))).getImage();
-            sword = new ImageIcon(Objects.requireNonNull(getClass().getResource("inventoryItems/Sword.png"))).getImage();
-            shield = new ImageIcon(Objects.requireNonNull(getClass().getResource("inventoryItems/Shield.png"))).getImage();
-
+            key =
+                    new ImageIcon(
+                                    Objects.requireNonNull(
+                                            getClass().getResource("/inventoryItems/key.png")))
+                            .getImage();
+            health =
+                    new ImageIcon(
+                                    Objects.requireNonNull(
+                                            getClass()
+                                                    .getResource(
+                                                            "/inventoryItems/healthPotion.png")))
+                            .getImage();
+            sword =
+                    new ImageIcon(
+                                    Objects.requireNonNull(
+                                            getClass().getResource("/inventoryItems/Sword.png")))
+                            .getImage();
+            shield =
+                    new ImageIcon(
+                                    Objects.requireNonNull(
+                                            getClass().getResource("/inventoryItems/Shield.png")))
+                            .getImage();
 
             Player player = Script.gameMap.getPlayer();
-            int[] itemCounts = {player.getItemCount("k"),player.getItemCount("he"), 1, 1};
+            int[] itemCounts = {player.getItemCount("k"), player.getItemCount("he"), 1, 1};
 
             int totalWidth = (padding + imageWidth) * 2 + interPadding;
             int totalHeight = (padding + imageHeight) * 2 + interPadding + titleHeight;
 
-            float scaleFactor = (float) getHeight() /1080;
+            float scaleFactor = (float) getHeight() / 1080;
             int scaleFont = (int) (30 * scaleFactor);
             g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont));
 
@@ -391,14 +450,16 @@ public class MainGameWindow extends JFrame {
                     g2d.fillRoundRect(itemX, itemY, imageWidth, imageHeight, 10, 10);
                     g2d.setColor(Color.WHITE);
                     g2d.drawRoundRect(itemX, itemY, imageWidth, imageHeight, 10, 10);
-                    g2d.drawString(itemTitles[index], itemX + padding/2, itemY);
+                    g2d.drawString(itemTitles[index], itemX + padding / 2, itemY);
                     g2d.drawImage(images[index], itemX, itemY, imageWidth, imageHeight, this);
                     g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont2));
-                    g2d.drawString(String.valueOf(itemCounts[index]), itemX + imageWidth - padding, itemY + imageHeight - padding);
+                    g2d.drawString(
+                            String.valueOf(itemCounts[index]),
+                            itemX + imageWidth - padding,
+                            itemY + imageHeight - padding);
                     g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont));
                 }
             }
-
         }
 
         private void drawHealthBar(Graphics2D g2d) {
@@ -416,30 +477,42 @@ public class MainGameWindow extends JFrame {
             int barX = (int) (screenWidth * 0.0154);
             int barY = (int) (screenHeight * 0.02) + titleHeight + containerPadding;
 
-            float scaleFactor = (float) getHeight() /1080;
+            float scaleFactor = (float) getHeight() / 1080;
             int scaleFont = (int) (30 * scaleFactor);
 
             int containerWidth = barWidth + 2 * containerPadding;
             int containerHeight = barHeight + titleHeight + 2 * containerPadding;
             g2d.setColor(Color.DARK_GRAY);
-            g2d.fillRoundRect(barX - containerPadding, barY - titleHeight - containerPadding, containerWidth, containerHeight,20,20);
+            g2d.fillRoundRect(
+                    barX - containerPadding,
+                    barY - titleHeight - containerPadding,
+                    containerWidth,
+                    containerHeight,
+                    20,
+                    20);
             g2d.setColor(Color.WHITE);
-            g2d.drawRoundRect(barX - containerPadding, barY - titleHeight - containerPadding, containerWidth, containerHeight, 20, 20);
+            g2d.drawRoundRect(
+                    barX - containerPadding,
+                    barY - titleHeight - containerPadding,
+                    containerWidth,
+                    containerHeight,
+                    20,
+                    20);
 
             g2d.setColor(Color.WHITE);
             g2d.setFont(new Font(customFont.getFontName(), customFont.getStyle(), scaleFont));
             g2d.drawString("Health", barX, barY - containerPadding);
 
             g2d.setColor(Color.GRAY);
-            g2d.fillRoundRect(barX, barY, barWidth, barHeight,20,20);
+            g2d.fillRoundRect(barX, barY, barWidth, barHeight, 20, 20);
 
-            GradientPaint gradient = new GradientPaint(barX, barY, Color.RED,
-                    barX + barWidth, barY, Color.GREEN,
-                    false);
+            GradientPaint gradient =
+                    new GradientPaint(
+                            barX, barY, Color.RED, barX + barWidth, barY, Color.GREEN, false);
             g2d.setPaint(gradient);
 
             int healthWidth = (int) ((Script.health / 100.0) * barWidth);
-            g2d.fillRoundRect(barX, barY, healthWidth, barHeight,20,20);
+            g2d.fillRoundRect(barX, barY, healthWidth, barHeight, 20, 20);
 
             g2d.setColor(Color.BLACK);
             g2d.drawRoundRect(barX, barY, barWidth, barHeight, 20, 20);
@@ -448,21 +521,21 @@ public class MainGameWindow extends JFrame {
         private void drawCounters(Graphics2D g2d) {
             Font customFont = GameLauncher.loadCustomFont();
 
-            int barWidth = (int)getWidth()/12;
+            int barWidth = (int) getWidth() / 12;
             int counterX = getWidth() - barWidth - 20;
-            int counterY = (int) getHeight()/15;
+            int counterY = (int) getHeight() / 15;
             int lifeCounterX = getWidth() - barWidth - 20;
-            int lifeCounterY = (int) getHeight()/9;
+            int lifeCounterY = (int) getHeight() / 9;
 
-            float scaleFactor = (float) getHeight() /1080;
+            float scaleFactor = (float) getHeight() / 1080;
             int scaleFont = (int) (30 * scaleFactor);
 
             g2d.setFont(new Font(customFont.getFontName(), customFont.getStyle(), scaleFont));
 
             g2d.setColor(Color.DARK_GRAY);
-            g2d.fillRoundRect(counterX - 10, counterY - 30, barWidth, 40,20,20);
+            g2d.fillRoundRect(counterX - 10, counterY - 30, barWidth, 40, 20, 20);
             g2d.setColor(Color.WHITE);
-            g2d.drawRoundRect(counterX - 10, counterY - 30, barWidth,40,20,20);
+            g2d.drawRoundRect(counterX - 10, counterY - 30, barWidth, 40, 20, 20);
 
             g2d.setColor(Color.WHITE);
             AtomicInteger totalSeconds = counterValue;
@@ -473,15 +546,13 @@ public class MainGameWindow extends JFrame {
             g2d.drawString(timeString, counterX, counterY);
 
             g2d.setColor(Color.DARK_GRAY);
-            g2d.fillRoundRect(lifeCounterX - 10, lifeCounterY - 30, barWidth, 40,20,20);
+            g2d.fillRoundRect(lifeCounterX - 10, lifeCounterY - 30, barWidth, 40, 20, 20);
             g2d.setColor(Color.WHITE);
-            g2d.drawRoundRect(lifeCounterX - 10, lifeCounterY - 30, barWidth, 40,20,20);
+            g2d.drawRoundRect(lifeCounterX - 10, lifeCounterY - 30, barWidth, 40, 20, 20);
 
             g2d.setColor(Color.WHITE);
             g2d.drawString("Lives: " + lifeNumber, lifeCounterX, lifeCounterY);
         }
-
-
     }
 
     public static MainGameWindow getInstance() {
@@ -492,10 +563,11 @@ public class MainGameWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MainGameWindow game = new MainGameWindow();
-            game.setVisible(true);
-            Script.setGameWindow(game);
-        });
+        SwingUtilities.invokeLater(
+                () -> {
+                    MainGameWindow game = new MainGameWindow();
+                    game.setVisible(true);
+                    Script.setGameWindow(game);
+                });
     }
 }
