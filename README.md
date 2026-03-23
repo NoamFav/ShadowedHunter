@@ -1,54 +1,58 @@
-# ShadowedHunter
+# 🗡 ShadowedHunter
 
-**ShadowedHunter** is a cross-platform indie game project developed across multiple technologies. This repository acts as the central hub for all game development, combining historical and current codebases, shared assets, and design documents.
+<div align="center">
 
----
+<img src="https://img.shields.io/badge/java-22+-ED8B00.svg?style=for-the-badge&logo=openjdk" alt="Java">
+<img src="https://img.shields.io/badge/unity-2023+-black.svg?style=for-the-badge&logo=unity" alt="Unity">
+<img src="https://img.shields.io/badge/license-Proprietary-orange.svg?style=for-the-badge" alt="License">
 
-## Repository Structure
+**Cross-platform indie metroidvania with fast-paced combat and strategic puzzles**
 
-* **`java/`**
-  Legacy version of ShadowedHunter, built using Java Swing.
-  ➔ [shadowedhunter-java](https://github.com/youruser/shadowedhunter-java)
+[Structure](#structure) · [Cloning](#cloning) · [Vision](#vision)
 
-* **`unity/`**
-  Modern C# implementation of ShadowedHunter using Unity.
-  ➔ [shadowedhunter-unity](https://github.com/youruser/shadowedhunter-unity)
-
-* **`docs/`**
-  Shared documentation, concept art, game design notes, and planning materials.
-
-* **`assets/`** *(optional)*
-  Shared sprites, sound effects, and game resources used across versions.
+</div>
 
 ---
 
-## Cloning the Repository
+ShadowedHunter is a dark, immersive metroidvania developed across two codebases — a legacy Java/Swing version and the current Unity C# implementation — with shared assets and design documents.
 
-To clone the repository including all submodules:
+---
+
+## Structure
+
+| Directory | Description |
+|-----------|-------------|
+| `java/` | Legacy Java Swing version — archived for reference |
+| `unity/` | Current C# Unity implementation — primary development |
+| `docs/` | Concept art, GDD, and planning materials |
+| `assets/` | Shared sprites, sound effects, and resources |
+
+---
+
+## Cloning
 
 ```bash
-git clone --recurse-submodules https://github.com/youruser/shadowedhunter.git
-```
+# Clone with all submodules
+git clone --recurse-submodules https://github.com/NoamFav/ShadowedHunter.git
 
-If you’ve already cloned the repository, initialize the submodules like this:
-
-```bash
+# Or initialize submodules after cloning
 git submodule update --init --recursive
 ```
 
 ---
 
-## Project Vision
+## Vision
 
-ShadowedHunter is designed to deliver fast-paced combat combined with strategic puzzle elements, set in a dark, immersive world.
-The Unity version represents the primary direction for future development, while the Java version remains archived for reference and educational purposes.
+Fast-paced combat combined with strategic puzzle elements, set in a dark immersive world. The Unity version is the primary direction for future development; the Java version remains archived for educational reference.
 
 ---
 
 ## License
 
-This project is proprietary and private unless otherwise stated. Unauthorized reproduction or distribution is prohibited.
+Proprietary — all rights reserved. © 2025 Noam Favier.
 
 ---
 
-© 2025 Noam Favier. All rights reserved.
+<div align="center">
+Made with ❤️ by <a href="https://github.com/NoamFav">NoamFav</a>
+</div>
